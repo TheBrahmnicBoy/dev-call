@@ -10,7 +10,6 @@ import {
 
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import AddIcCallIcon from '@mui/icons-material/AddIcCall';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 
 import CoderOnCall from './CoderOnCall';
@@ -81,7 +80,6 @@ export default function StartCall() {
         dispatch(startLoadingAction());
         try {
             const response = await getToken();
-            console.log(response);
             await hmsActions.join({
                 userName: currentUser.username || 'Anonymous',
                 authToken: response,
@@ -92,7 +90,7 @@ export default function StartCall() {
                     process.env.REACT_APP_100MS_TOKEN_ENDPOINT || undefined,
             });
         } catch (error) {
-            console.log(error);
+            // console.error('Error while joining call', error);
         }
         dispatch(stopLoadingAction());
     };

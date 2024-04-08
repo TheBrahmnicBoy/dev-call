@@ -59,12 +59,11 @@ const GoogleOneTapLogin = () => {
                 navigate('/chat');
             })
             .catch((error) => {
-                console.log(error);
                 dispatch(
                     notifyAction(
                         true,
                         'error',
-                        'Log In Failed. Please try again'
+                        error.message || 'Log In Failed. Please try again'
                     )
                 );
             });

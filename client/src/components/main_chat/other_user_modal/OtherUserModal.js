@@ -22,7 +22,7 @@ import GithubStats from './GithubStats';
 
 // Firebase
 import { db } from '../../../firebaseConfig';
-import { doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 
 // Actions
 import {

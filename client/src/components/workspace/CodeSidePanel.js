@@ -83,7 +83,6 @@ export default function CodeSidePanel({
     };
 
     const handleCodeSubmission = async () => {
-        console.log(codeRef.current);
         const sourceCode = codeRef.current;
         const languageId = lang.id;
         setProcessingCode(true);
