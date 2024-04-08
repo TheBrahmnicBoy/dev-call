@@ -3,11 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import { db } from './../../../firebaseConfig';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 
 import './Whiteboard.css';
 
@@ -19,7 +18,7 @@ export default function Whiteboard({ canvasRef, socketRef }) {
     const [canvasCurrent, setCanvasCurrent] = useState(null);
 
     useEffect(() => {
-        const fetchData=async()=>{
+        const fetchData = async () => {
             const drawingData = await getDoc(doc(db, 'workspace', params.workspaceId));
             if (drawingData.exists()) {
                 const canvas = canvasRef.current;
@@ -51,8 +50,8 @@ export default function Whiteboard({ canvasRef, socketRef }) {
                 context.drawImage(image, 0, 0);
             };
             image.src = drawingData;
-            
-        }else{
+
+        } else {
             fetchData();
         }
     }, []);

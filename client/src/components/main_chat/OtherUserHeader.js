@@ -8,21 +8,9 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import OtherUserModal from './other_user_modal/OtherUserModal';
-import Divider from '@mui/material/Divider';
 
-export default function OtherUserHeader({ chat = [], mode }) {
-
+export default function OtherUserHeader({ chat = [], mode, startVideoCall, startWorkspace }) {
     const [modalOpen, setModalOpen] = useState(false);
-
-    const startVideoCall = () => {
-        // handleSendMessage(INVITE_TEMPLATE, true);
-        window.location.href = `/meet/${chat[0]}`;
-    };
-
-    const startWorkspace = () => {
-        window.location.href = `/workspace/${chat[0]}`;
-    };
-
     return (
         <>
             {modalOpen && (

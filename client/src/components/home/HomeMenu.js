@@ -25,7 +25,6 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 export default function HomeMenu({
-    notificationGranted,
     setNotificationGranted,
     themeChange,
     mode,

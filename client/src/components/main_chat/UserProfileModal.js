@@ -116,10 +116,9 @@ export default function UserProfileModal({
                 notifyAction(
                     true,
                     'error',
-                    'Something went wrong! please try again later.'
+                    error.message || 'An error occurred. Please try again.'
                 )
             );
-            console.log(error);
         }
         dispatch(stopLoadingAction());
         setModalOpen(false);

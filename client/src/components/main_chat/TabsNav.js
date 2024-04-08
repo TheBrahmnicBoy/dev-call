@@ -281,7 +281,13 @@ export default function TabsNav({
                     unsub();
                 };
             } catch (error) {
-                console.log(error);
+                dispatch(
+                    notifyAction(
+                        true,
+                        'error',
+                        error.message || 'Something went wrong, please try again'
+                    )
+                );
             }
         };
         currentUser.uid && getUserChats();

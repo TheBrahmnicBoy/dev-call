@@ -6,7 +6,6 @@ import { Box, IconButton } from '@mui/material';
 
 const MarkComponent = (props) => {
   const language = props.className;
-  console.log(language?.replace('language-', ''));
   return (
     <Box sx={{
       position: 'relative',

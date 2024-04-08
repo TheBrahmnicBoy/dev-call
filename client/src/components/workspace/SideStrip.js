@@ -23,7 +23,7 @@ import MicOffIcon from '@mui/icons-material/MicOff';
 import HeadsetIcon from '@mui/icons-material/Headset';
 import HeadsetOffIcon from '@mui/icons-material/HeadsetOff';
 import CallEndIcon from '@mui/icons-material/CallEnd';
-import { doc, updateDoc, setDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -98,9 +98,8 @@ export default function SideStrip({ handleSelect, selected }) {
             await updateDoc(dbRef, data);
             window.location.href = '/chat';
         } catch (error) {
-            console.log(error);
             dispatch(
-                notifyAction(true, 'error', 'Error uploading data to cloud')
+                notifyAction(true, 'error', error.message || 'Error uploading data to cloud')
             );
         } finally {
             dispatch(stopLoadingAction());

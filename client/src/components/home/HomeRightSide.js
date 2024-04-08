@@ -158,7 +158,7 @@ export default function HomeRightSide({ mode, chat }) {
                 backgroundColor: mode === 'dark' ? '#1a1a1a' : '#f5f5f5',
             }}
         >
-            <OtherUserHeader chat={chat} mode={mode} />
+            <OtherUserHeader {...{ chat, mode, startVideoCall, startWorkspace }} />
             <Box
                 sx={{
                     pt: '20px',
