@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
     doc,
     updateDoc,
@@ -29,6 +30,7 @@ import {
 export default function HomeRightSide({ mode, chat }) {
     const inputRef = useRef();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const currentUser = useSelector((state) => state.auth);
 
@@ -132,7 +134,7 @@ export default function HomeRightSide({ mode, chat }) {
         dispatch(startLoadingAction());
         await handleSendMessage(INVITE_TEMPLATE, false);
         dispatch(stopLoadingAction());
-        window.location.href = `/meet/${chat[0]}`;
+        navigate(`/meet/${chat[0]}`);
     };
 
     const WORK_INVITE_TEMPLATE = `Hey, I'm using Dev Chat+ for Productive Collaboration
@@ -143,7 +145,7 @@ export default function HomeRightSide({ mode, chat }) {
         dispatch(startLoadingAction());
         await handleSendMessage(WORK_INVITE_TEMPLATE, false);
         dispatch(stopLoadingAction());
-        window.location.href = `/workspace/${chat[0]}`;
+        navigate(`/workspace/${chat[0]}`);
     };
 
     return (

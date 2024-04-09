@@ -9,7 +9,7 @@ import {
     setDoc,
     updateDoc,
     serverTimestamp,
-    onSnapshot,
+    onSnapshot
 } from 'firebase/firestore';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
@@ -341,11 +341,14 @@ export default function TabsNav({
     };
 
     const handleSelect = async () => {
+        // The id of the common chatRoom
         const combinedId =
             currentUser.uid > searchResults.uid
                 ? currentUser.uid + searchResults.uid
                 : searchResults.uid + currentUser.uid;
+
         try {
+            // Check if the chat already exists, if not create a new one
             const res = await getDoc(doc(db, 'chats', combinedId));
 
             if (!res.exists()) {
@@ -353,26 +356,30 @@ export default function TabsNav({
 
                 await setDoc(doc(db, 'chats', combinedId), { messages: [] });
 
-                await updateDoc(doc(db, 'userChats', currentUser.uid), {
-                    [combinedId + '.userInfo']: {
-                        uid: searchResults.uid,
-                        name: searchResults.name,
-                        photoURL: searchResults.photoURL,
-                        username: searchResults.email.split('@')[0],
-                        email: searchResults.email,
+                await setDoc(doc(db, 'userChats', currentUser.uid), {
+                    [combinedId]: {
+                        userInfo: {
+                            uid: searchResults.uid,
+                            name: searchResults.name,
+                            photoURL: searchResults.photoURL,
+                            username: searchResults.email.split('@')[0],
+                            email: searchResults.email,
+                        },
+                        date: serverTimestamp(),
                     },
-                    [combinedId + '.date']: serverTimestamp(),
                 });
 
-                await updateDoc(doc(db, 'userChats', searchResults.uid), {
-                    [combinedId + '.userInfo']: {
-                        uid: currentUser.uid,
-                        name: currentUser.name,
-                        photoURL: currentUser.photoURL,
-                        username: currentUser.username,
-                        email: currentUser.email,
+                await setDoc(doc(db, 'userChats', searchResults.uid), {
+                    [combinedId]: {
+                        userInfo: {
+                            uid: currentUser.uid,
+                            name: currentUser.name,
+                            photoURL: currentUser.photoURL,
+                            username: currentUser.username,
+                            email: currentUser.email,
+                        },
+                        date: serverTimestamp(),
                     },
-                    [combinedId + '.date']: serverTimestamp(),
                 });
 
                 dispatch(stopLoadingAction());
@@ -382,13 +389,12 @@ export default function TabsNav({
                 notifyAction(
                     true,
                     'error',
-                    'Something went wrong, please try again'
+                    err.message || 'Something went wrong, please try again'
                 )
             );
         }
         setChat([
-            combinedId,
-            {
+            combinedId, {
                 userInfo: {
                     username: searchResults.email.split('@')[0],
                     photoURL: searchResults.photoURL,

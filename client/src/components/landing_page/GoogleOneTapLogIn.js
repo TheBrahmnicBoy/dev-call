@@ -75,6 +75,7 @@ const GoogleOneTapLogin = () => {
             window.google.accounts.id.initialize({
                 client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
                 ux_mode: 'popup',
+                use_fedcm_for_prompt: true,
                 callback: handleResponse,
             });
             window.google.accounts.id.renderButton(googleButton.current, {
