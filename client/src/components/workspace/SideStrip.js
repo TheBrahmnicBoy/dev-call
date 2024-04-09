@@ -23,7 +23,7 @@ import MicOffIcon from '@mui/icons-material/MicOff';
 import HeadsetIcon from '@mui/icons-material/Headset';
 import HeadsetOffIcon from '@mui/icons-material/HeadsetOff';
 import CallEndIcon from '@mui/icons-material/CallEnd';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -95,7 +95,15 @@ export default function SideStrip({ handleSelect, selected }) {
                 canvasData,
             };
             const dbRef = doc(db, 'workspace', params.workspaceId);
-            await updateDoc(dbRef, data);
+
+            // Create doc if it doesn't exist, else update it
+            const docSnap = await dbRef.get();
+            if (!docSnap.exists()) {
+                await setDoc(dbRef, data);
+            } else {
+                await updateDoc(dbRef, data);
+            }
+
             window.location.href = '/chat';
         } catch (error) {
             dispatch(
