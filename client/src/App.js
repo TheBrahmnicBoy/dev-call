@@ -70,6 +70,8 @@ const App = () => {
             dispatch(signInAction(uid, email, name, photoURL, dnd, signInTime));
             if (window.location.pathname == '/') {
                 navigate('/chat');
+            } else {
+                navigate(window.location.pathname);
             }
         }
     }, []);
@@ -101,14 +103,6 @@ const App = () => {
                         </HMSRoomProvider>
                     }
                 />
-                {/* <Route
-                    path='/code/:groundId'
-                    element={
-                        <ThemeProvider theme={alwaysDarkTheme}>
-                            <CodePlayGround />
-                        </ThemeProvider>
-                    }
-                /> */}
             </Routes>
         </ThemeProvider>
     );

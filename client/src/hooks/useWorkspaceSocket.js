@@ -26,7 +26,7 @@ export default function useWorkspaceSocket(
                 // eslint-disable-next-line no-console
                 console.log('socket error', error);
                 alert(
-                    'Socket connection failed, Please refresh the app after ~2 minutes.'
+                    'Socket connection failed, Please refresh the app after ~2 minutes. This may have happened because Render spins down the server after inactivity. If you want instant response, please consider supporting the developers so that we can upgrade to a premium plan.'
                 );
             }
             socketRef.current.emit('join', {
