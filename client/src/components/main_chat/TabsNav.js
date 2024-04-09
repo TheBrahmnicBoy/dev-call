@@ -8,7 +8,8 @@ import {
     doc,
     setDoc,
     serverTimestamp,
-    onSnapshot
+    onSnapshot,
+    updateDoc
 } from 'firebase/firestore';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
@@ -339,6 +340,26 @@ export default function TabsNav({
         setSearchText(e.target.value);
     };
 
+    const handleUserChat = async (userId, combinedId, userInfo) => {
+        const userChats = await getDoc(doc(db, 'userChats', userId));
+
+        if (!userChats.exists()) {
+            await setDoc(doc(db, 'userChats', userId), {
+                [combinedId]: {
+                    userInfo,
+                    date: serverTimestamp(),
+                },
+            });
+        } else {
+            await updateDoc(doc(db, 'userChats', userId), {
+                [combinedId]: {
+                    userInfo,
+                    date: serverTimestamp(),
+                },
+            });
+        }
+    };
+
     const handleSelect = async () => {
         // The id of the common chatRoom
         const combinedId =
@@ -355,31 +376,25 @@ export default function TabsNav({
 
                 await setDoc(doc(db, 'chats', combinedId), { messages: [] });
 
-                await setDoc(doc(db, 'userChats', currentUser.uid), {
-                    [combinedId]: {
-                        userInfo: {
-                            uid: searchResults.uid,
-                            name: searchResults.name,
-                            photoURL: searchResults.photoURL,
-                            username: searchResults.email.split('@')[0],
-                            email: searchResults.email,
-                        },
-                        date: serverTimestamp(),
-                    },
-                });
+                // Check if this is the first chat for the user
+                const currentUserInfo = {
+                    uid: searchResults.uid,
+                    name: searchResults.name,
+                    photoURL: searchResults.photoURL,
+                    username: searchResults.email.split('@')[0],
+                    email: searchResults.email,
+                };
+                await handleUserChat(currentUser.uid, combinedId, currentUserInfo);
 
-                await setDoc(doc(db, 'userChats', searchResults.uid), {
-                    [combinedId]: {
-                        userInfo: {
-                            uid: currentUser.uid,
-                            name: currentUser.name,
-                            photoURL: currentUser.photoURL,
-                            username: currentUser.username,
-                            email: currentUser.email,
-                        },
-                        date: serverTimestamp(),
-                    },
-                });
+                // Check if this is the first chat for the other user
+                const otherUserInfo = {
+                    uid: currentUser.uid,
+                    name: currentUser.name,
+                    photoURL: currentUser.photoURL,
+                    username: currentUser.username,
+                    email: currentUser.email,
+                };
+                await handleUserChat(searchResults.uid, combinedId, otherUserInfo);
 
                 dispatch(stopLoadingAction());
             }
