@@ -96,9 +96,7 @@ export default function SideStrip({ handleSelect, selected }) {
             };
             const dbRef = doc(db, 'workspace', params.workspaceId);
 
-            // Create doc if it doesn't exist, else update it
-            const docSnap = await dbRef.get();
-            if (!docSnap.exists()) {
+            if (!dbRef.exists()) {
                 await setDoc(dbRef, data);
             } else {
                 await updateDoc(dbRef, data);
