@@ -2,7 +2,7 @@
 
 **Dev Chat+** is a [Web2 Application](https://ethereum.org/en/developers/docs/web2-vs-web3/) specifically designed to cater to the needs of professional users such as *software developers, designers, and project managers*. The application aims to provide a comprehensive platform for collaboration and communication among professionals working on various projects.
 
-<sup>Dev Chat+ was a web application developed for `project_1A` as part of the CSE course at University of Mumbai.</sup> 
+<sup>Dev Chat+ was a web application developed for `Mini Project_2` as part of the CSE course at University of Mumbai.</sup> 
 
 <details>
   <summary>List of Contents</summary>
